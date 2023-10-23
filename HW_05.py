@@ -19,6 +19,7 @@ async def request(url: str):
         else:
             raise HttpError(f"Error status: {r.status_code} for {url}")
 
+
 def parser_response(my_data: dict, currencies_add: list = None) -> dict:
     currencies_base = ['USD', 'EUR']
     currencies = currencies_base + currencies_add
@@ -55,7 +56,8 @@ if __name__ == '__main__':
     days = int(sys.argv[1])
     add_currencies = list(sys.argv[2:])
 
-    for day in range(days,0,-1):
+    if days > 10:
+        days = 10
+    for day in range(days, 0, -1):
         r = asyncio.run(main(day))
         print(parser_response(r, add_currencies))
-
